@@ -1,0 +1,14 @@
+<input
+  #inputTarea
+  type="text"
+  placeholder="Escribe una tarea..."
+  (keyup.enter)="agregarTarea(inputTarea.value)"
+/>
+
+<button (click)="agregarTarea(inputTarea.value)">Add</button>
+
+<ul id="lista">
+  @for (tarea of tareas(); track $index) {
+    <li>{{ tarea }}</li>
+  }
+</ul>
