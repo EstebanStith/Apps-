@@ -1,0 +1,43 @@
+<div *ngIf="isLoading" style="text-align: center; margin-top: 50px;">
+  <h3>Cargando detalles...</h3>
+</div>
+
+<div *ngIf="!isLoading && pokemon" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 12px; background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">
+  
+  <!-- Botón para regresar a la lista -->
+  <div style="text-align: left; margin-bottom: 20px;">
+    <a routerLink="/" style="text-decoration: none; color: white; background: #ff5252; padding: 8px 16px; border-radius: 5px; font-weight: bold;">
+      ⬅ Volver
+    </a>
+  </div>
+
+  <h1 style="text-transform: capitalize; font-size: 32px; margin-bottom: 5px;">{{ pokemon.name }}</h1>
+  <p style="color: #666; font-weight: bold; font-size: 18px; margin-top: 0;">#{{ pokemon.id }}</p>
+
+  <!-- Imagen grande oficial -->
+  <img [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + pokemon.id + '.png'" 
+       [alt]="pokemon.name" 
+       style="width: 200px; height: 200px;">
+
+  <!-- Datos principales -->
+  <div style="display: flex; justify-content: space-around; background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <div>
+      <h3 style="margin: 0;">Altura</h3>
+      <p style="margin: 5px 0 0 0;">{{ pokemon.height / 10 }} m</p> <!-- La API lo da en decímetros -->
+    </div>
+    <div>
+      <h3 style="margin: 0;">Peso</h3>
+      <p style="margin: 5px 0 0 0;">{{ pokemon.weight / 10 }} kg</p> <!-- La API lo da en hectogramos -->
+    </div>
+  </div>
+
+  <!-- Tipos (Fuego, Agua, etc.) -->
+  <h3>Tipos</h3>
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    <span *ngFor="let t of pokemon.types" 
+          style="background: #333; color: white; padding: 5px 15px; border-radius: 20px; text-transform: capitalize;">
+      {{ t.type.name }}
+    </span>
+  </div>
+
+</div>

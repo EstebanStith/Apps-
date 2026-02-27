@@ -1,0 +1,24 @@
+<div *ngIf="isLoading" style="text-align: center; margin-top: 50px;">
+  <h3>Cargando Pokémon...</h3>
+</div>
+
+<!-- Contenedor estilo grilla -->
+<div *ngIf="!isLoading" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px;">
+  
+  <div *ngFor="let pokemon of pokemonList" 
+       style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 12px; width: 160px; text-align: center; cursor: pointer; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+       [routerLink]="['/pokemon', pokemon.name]"
+       onmouseover="this.style.transform='scale(1.05)'" 
+       onmouseout="this.style.transform='scale(1)'">
+       
+    <!-- Agregamos el número del ID -->
+    <span style="color: #888; font-size: 12px; font-weight: bold;">#{{ pokemon.id.padStart(3, '0') }}</span>
+    
+    <!-- Aquí cargamos la imagen usando el truco del ID -->
+    <img [src]="pokemon.image" [alt]="pokemon.name" style="width: 120px; height: 120px; display: block; margin: 10px auto;">
+    
+    <h3 style="text-transform: capitalize; margin: 5px 0 0 0; color: #333;">{{ pokemon.name }}</h3>
+    
+  </div>
+
+</div>
