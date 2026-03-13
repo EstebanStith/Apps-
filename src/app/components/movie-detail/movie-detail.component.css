@@ -1,0 +1,84 @@
+.detail-page {
+  background: #141414;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #141414;
+  padding: 16px 32px;
+}
+
+.navbar h1 {
+  color: #e50914;
+  margin: 0;
+}
+
+.btn-back {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.detail-content {
+  display: flex;
+  gap: 40px;
+  padding: 40px 60px;
+  align-items: flex-start;
+}
+
+.detail-content img {
+  width: 280px;
+  border-radius: 10px;
+  object-fit: cover;
+  height: 400px;
+}
+
+.info {
+  color: white;
+  max-width: 500px;
+}
+
+.info h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.category {
+  color: #e50914;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.btn-ver {
+  margin-top: 24px;
+  background: #e50914;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-ver:disabled {
+  background: #555;
+  cursor: default;
+}
+
+.saved-msg {
+  color: #4caf50;
+  font-weight: bold;
+}

@@ -1,0 +1,25 @@
+<div style="background:#141414; min-height:100vh;" *ngIf="movie">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; background:#141414; padding:16px 32px; border-bottom:2px solid #e50914;">
+    <h1 style="color:#e50914; margin:0;">🎬 NetflixApp</h1>
+    <button (click)="goBack()" style="background:transparent; color:white; border:1px solid white; padding:8px 16px; border-radius:4px; cursor:pointer; font-size:1rem;">← Volver</button>
+  </div>
+
+  <div style="display:flex; gap:40px; padding:40px 60px; align-items:flex-start;">
+    <img [src]="movie.image" [alt]="movie.title"
+      style="width:280px; height:400px; object-fit:cover; border-radius:10px;"
+      onerror="this.src='https://placehold.co/280x400/333/white?text=Sin+imagen'">
+
+    <div style="color:white; max-width:500px;">
+      <h2 style="font-size:2rem; margin-bottom:8px;">{{ movie.title }}</h2>
+      <p style="color:#e50914; font-weight:bold; margin-bottom:16px;">{{ movie.category }}</p>
+      <p style="font-size:1.1rem; line-height:1.6; color:#ccc;">{{ movie.description }}</p>
+
+      <button (click)="saveMovie()" [disabled]="saved"
+        [style.background]="saved ? '#555' : '#e50914'"
+        style="margin-top:24px; color:white; border:none; padding:14px 28px; font-size:1rem; font-weight:bold; border-radius:4px; cursor:pointer;">
+        {{ saved ? 'Ya guardada' : '▶ Ver' }}
+      </button>
+    </div>
+  </div>
+</div>
