@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce App (COP - Desktop Ready)</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <main id="app-container">
+        <!-- Sidebar Navigation (Bottom on Mobile, Left on PC) -->
+        <nav class="bottom-nav" id="bottom-nav" style="display:none;">
+            <a href="#" class="nav-item active" data-target="home">
+                <i class="ph-fill ph-house"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="#" class="nav-item" data-target="search">
+                <i class="ph ph-magnifying-glass"></i>
+                <span>Buscar</span>
+            </a>
+            <a href="#" class="nav-item" data-target="cart">
+                <div class="icon-badge-container">
+                    <i class="ph ph-shopping-cart"></i>
+                    <span class="nav-badge" id="nav-cart-badge">0</span>
+                </div>
+                <span>Carrito</span>
+            </a>
+            <a href="#" class="nav-item" data-target="wishlist">
+                <i class="ph ph-heart"></i>
+                <span>Favoritos</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile">
+                <i class="ph ph-user"></i>
+                <span>Perfil</span>
+            </a>
+        </nav>
+
+        <!-- View Container Wrapper -->
+        <div id="views-wrapper">
+            <!-- View: Login -->
+            <section id="view-login" class="view hidden full-screen auth-view active">
+                <div class="auth-box">
+                    <h2>Iniciar Sesión</h2>
+                    <p class="text-sec" style="margin-bottom:20px;">Ingresa a tu cuenta para explorar productos</p>
+                    <form id="login-form">
+                        <div class="input-group">
+                            <i class="ph ph-envelope"></i>
+                            <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ph ph-lock"></i>
+                            <input type="password" id="login-password" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary fluid" style="margin-top:20px;">Ingresar</button>
+                    </form>
+                    <p class="auth-switch">¿No tienes cuenta? <a href="#" onclick="navigate('register')">Regístrate</a></p>
+                </div>
+            </section>
+
+            <!-- View: Register -->
+            <section id="view-register" class="view hidden full-screen auth-view">
+                <div class="auth-box">
+                    <h2>Registrarse</h2>
+                    <p class="text-sec" style="margin-bottom:20px;">Crea una cuenta nueva</p>
+                    <form id="register-form">
+                        <div class="input-group">
+                            <i class="ph ph-user"></i>
+                            <input type="text" id="register-name" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ph ph-envelope"></i>
+                            <input type="email" id="register-email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ph ph-lock"></i>
+                            <input type="password" id="register-password" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary fluid" style="margin-top:20px;">Crear Cuenta</button>
+                    </form>
+                    <p class="auth-switch">¿Ya tienes cuenta? <a href="#" onclick="navigate('login')">Inicia sesión</a></p>
+                </div>
+            </section>
+
+            <!-- View: Home -->
+            <section id="view-home" class="view hidden">
+                <header class="top-bar">
+                    <i class="ph ph-arrow-left"></i>
+                    <h2>Nueva Colección</h2>
+                    <i class="ph ph-magnifying-glass" onclick="navigate('search')"></i>
+                </header>
+                <div class="view-content">
+                    <!-- Promotional Banner -->
+                    <div style="margin: 0 20px 20px; background: linear-gradient(135deg, var(--primary-blue), #5A67D8); border-radius: 12px; padding: 25px 20px; color: white; display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="font-size: 1.4rem; margin-bottom: 5px;">50% de Descuento</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 15px;">En toda la colección de verano. ¡Aprovecha la promoción en línea!</p>
+                        <button class="btn" style="background-color: white; color: var(--primary-blue); font-weight: bold; width: fit-content; padding: 10px 20px; font-size: 0.85rem;" onclick="navigate('search')">Comprar Ahora</button>
+                    </div>
+
+                    <div class="tabs-container">
+                        <span class="tab active">Todo</span>
+                        <span class="tab">Ropa</span>
+                        <span class="tab">Calzado</span>
+                        <span class="tab">Accesorios</span>
+                    </div>
+                    
+                    <div class="filter-sort-container">
+                        <div class="btn-group">
+                            <button class="btn btn-light"><i class="ph ph-faders"></i> Filtrar</button>
+                            <button class="btn btn-light"><i class="ph ph-arrows-down-up"></i> Ordenar</button>
+                        </div>
+                        
+                        <div class="active-filters">
+                            <span class="chip">Precio: $0 - $100k <i class="ph ph-x"></i></span>
+                            <span class="chip">Talla: M <i class="ph ph-x"></i></span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-grid" id="home-product-grid">
+                        <!-- Products rendered here via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Search -->
+            <section id="view-search" class="view hidden">
+                <header class="top-bar">
+                    <i class="ph ph-arrow-left" onclick="navigate('home')"></i>
+                    <h2>Búsqueda</h2>
+                    <div class="icon-badge-container" onclick="navigate('cart')">
+                        <i class="ph ph-shopping-cart"></i>
+                    </div>
+                </header>
+                <div class="view-content" style="padding: 0 20px;">
+                    <div class="search-input-container">
+                        <i class="ph ph-magnifying-glass text-sec"></i>
+                        <input type="text" id="main-search-input" placeholder="Buscar productos...">
+                        <i class="ph-fill ph-x-circle text-sec clear-btn" onclick="document.getElementById('main-search-input').value=''"></i>
+                    </div>
+                    
+                    <div id="search-results-container" style="display:none; margin-bottom: 20px;">
+                        <div class="product-grid" id="search-results-grid"></div>
+                    </div>
+
+                    <div id="search-default-view">
+                        <ul class="search-suggestions">
+                            <li><i class="ph ph-magnifying-glass text-sec"></i> <span class="text-blue">Audífonos</span> con cancelación de ruido</li>
+                            <li><i class="ph ph-magnifying-glass text-sec"></i> <span class="text-blue">Audífonos</span> gamer</li>
+                        </ul>
+                        
+                        <div class="section-header">
+                            <h3>Búsquedas Recientes</h3>
+                            <a href="#" class="text-blue font-medium" style="text-decoration:none; font-size: 0.85rem;">Borrar Todas</a>
+                        </div>
+                        <div class="chips-container">
+                            <span class="chip">Teclado Mecánico <i class="ph ph-x"></i></span>
+                            <span class="chip chip-light">Hub USB-C <i class="ph ph-x"></i></span>
+                        </div>
+                        
+                        <div class="section-header" style="margin-top:30px;">
+                            <h3>Categorías Populares</h3>
+                        </div>
+                        <div class="category-grid">
+                            <div class="category-card">
+                                <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400&q=80" alt="Electrónica">
+                                <div class="category-overlay"></div>
+                                <div class="category-title">Electrónica</div>
+                            </div>
+                            <div class="category-card">
+                                <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&q=80" alt="Calzado">
+                                <div class="category-overlay"></div>
+                                <div class="category-title">Calzado</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Cart -->
+            <section id="view-cart" class="view hidden">
+                <header class="top-bar">
+                    <i class="ph ph-arrow-left" onclick="navigate('home')"></i>
+                    <h2>Carrito de Compras</h2>
+                    <span class="badge secondary" id="cart-header-badge">0 ÍTEMS</span>
+                </header>
+                <div class="view-content" style="padding: 0 20px;">
+                    <div class="cart-items" id="cart-items-container">
+                        <!-- Dynamic items -->
+                    </div>
+                    
+                    <div class="order-summary card-bg">
+                        <div class="summary-row">
+                            <span class="text-sec">Subtotal</span>
+                            <span class="font-bold text-main" id="cart-subtotal">$0 COP</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="text-sec">Envío</span>
+                            <span class="font-bold text-success">Gratis</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total-row">
+                            <span class="font-bold">Total</span>
+                            <span class="total-price" id="cart-total">$0 COP</span>
+                        </div>
+                        <button class="btn btn-primary fluid" style="margin-top: 15px;">Proceder al Pago <i class="ph ph-arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Profile -->
+            <section id="view-profile" class="view hidden">
+                <header class="top-bar bg-gray">
+                    <i class="ph ph-arrow-left" onclick="navigate('home')"></i>
+                    <h2>Cuenta</h2>
+                    <i class="ph ph-gear" id="btn-settings-top"></i>
+                </header>
+                <div class="view-content bg-gray" style="padding: 0 20px;">
+                    <div class="profile-header card">
+                        <div class="profile-info-row">
+                            <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" id="profile-avatar-img" class="profile-avatar">
+                            <div class="profile-text">
+                                <h3 id="profile-name-text">Cargando...</h3>
+                                <p class="text-sec">Miembro desde Hoy</p>
+                                <span class="gold-badge"><i class="ph-fill ph-star"></i> Miembro Platino</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary fluid" id="btn-edit-profile">Editar Perfil</button>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">PEDIDOS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">RESEÑAS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">CUPONES</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-header">
+                        <h3>Pedidos Recientes</h3>
+                        <a href="#" class="text-blue font-medium" style="text-decoration:none; font-size: 0.85rem;">Ver Todos</a>
+                    </div>
+                    <div class="order-card card">
+                        <div class="order-top">
+                            <div>
+                                <p class="text-sec" style="font-size:0.75rem;">Pedido #ORD-88291</p>
+                                <h4 class="order-title">Audífonos Cancelación de Ruido</h4>
+                            </div>
+                            <span class="badge bg-success-light text-success" style="height: fit-content;">ENTREGADO</span>
+                        </div>
+                        <div class="order-progress">
+                            <div class="order-icon bg-gray-light"><i class="ph-fill ph-headphones text-blue"></i></div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                                <p class="progress-text">Llegó el 24 de Oct, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-header" style="margin-top:20px;">
+                        <h3>Direcciones Guardadas</h3>
+                        <button class="icon-btn-small bg-blue-light text-blue"><i class="ph ph-plus"></i></button>
+                    </div>
+                    <div class="address-card card border-blue">
+                        <div class="flex-between" style="margin-bottom:10px;">
+                            <h4 style="display:flex; align-items:center; gap:8px;"><i class="ph-fill ph-house text-sec"></i> Casa</h4>
+                            <i class="ph-fill ph-check-circle text-blue"></i>
+                        </div>
+                        <p class="text-sec" style="font-size:0.85rem; line-height:1.5;">Calle 123 Avenida, Apto 4B<br>Bogotá, D.C.<br>Colombia</p>
+                    </div>
+                    
+                    <div class="settings-list" id="profile-settings-list">
+                        <div class="settings-item card">
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <div class="setting-icon"><i class="ph-fill ph-credit-card"></i></div>
+                                <span class="font-medium">Métodos de Pago</span>
+                            </div>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                        <div class="settings-item card" id="btn-config">
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <div class="setting-icon"><i class="ph-fill ph-gear"></i></div>
+                                <span class="font-medium">Configuración</span>
+                            </div>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                        <div class="settings-item card text-danger" style="margin-top: 10px;" id="btn-logout">
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <div class="setting-icon bg-danger-light"><i class="ph-fill ph-sign-out"></i></div>
+                                <span class="font-medium">Cerrar Sesión</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-header" style="margin-top:20px;">
+                        <h3>Información y Soporte</h3>
+                    </div>
+                    <div class="settings-list">
+                        <div class="settings-item card info-btn" data-info="about">
+                            <span class="font-medium">Sobre Nosotros</span>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                        <div class="settings-item card info-btn" data-info="contact">
+                            <span class="font-medium">Contacto</span>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                        <div class="settings-item card info-btn" data-info="faq">
+                            <span class="font-medium">Preguntas Frecuentes</span>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                        <div class="settings-item card info-btn" data-info="terms">
+                            <span class="font-medium">Políticas de Devolución</span>
+                            <i class="ph ph-caret-right text-sec"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- View: Product Details -->
+            <section id="view-product" class="view hidden full-screen">
+                <header class="top-bar transparent">
+                    <i class="ph ph-arrow-left" onclick="navigate('home')"></i>
+                    <h2>Detalles del Producto</h2>
+                    <i class="ph ph-share-network"></i>
+                </header>
+                <div class="view-content" style="padding: 0;">
+                    <div class="product-hero">
+                        <img src="" id="detail-img" alt="Product">
+                        <div class="carousel-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-info-container">
+                        <div class="product-meta-row">
+                            <div>
+                                <span class="badge bg-success-light text-success" style="padding: 4px 8px; font-size: 0.65rem;">En Stock</span>
+                                <h2 class="product-name" id="detail-title">Cargando...</h2>
+                            </div>
+                            <div>
+                                <div class="product-price-large" id="detail-price">$0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="section-label">SELECCIONAR COLOR</div>
+                        <div class="color-selector">
+                            <div class="color-circle color-1 active"></div>
+                            <div class="color-circle color-2"></div>
+                            <div class="color-circle color-3"></div>
+                        </div>
+                        
+                        <div class="section-label">
+                            <span>SELECCIONAR TALLA</span>
+                            <a href="#" class="text-blue" style="text-transform:none; font-weight:500;">Guía de tallas</a>
+                        </div>
+                        <div class="size-selector">
+                            <div class="size-box active">S</div>
+                            <div class="size-box">M</div>
+                            <div class="size-box">L</div>
+                            <div class="size-box disabled">XL</div>
+                        </div>
+                        
+                        <div class="section-label">DESCRIPCIÓN</div>
+                        <p class="product-desc" id="detail-desc">La mejor calidad asegurada.</p>
+                        
+                        <div class="section-label" style="margin-top: 30px; margin-bottom: 20px; font-size:1rem; color:var(--text-main); text-transform:none;">Productos Relacionados</div>
+                        <div class="product-grid" style="padding: 0;" id="detail-related-grid">
+                            <!-- Rendered via JS -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bottom-action-bar">
+                    <button class="btn btn-outline-icon"><i class="ph-fill ph-heart text-blue"></i></button>
+                    <button class="btn btn-primary fluid" id="btn-add-to-cart"><i class="ph ph-shopping-cart"></i> Agregar al Carrito</button>
+                </div>
+            </section>
+        </div><!-- End Views Wrapper -->
+    </main>
+
+    <!-- Modals -->
+    <div id="modal-settings" class="modal hidden">
+        <div class="modal-content">
+            <header class="top-bar">
+                <i class="ph ph-x text-main close-modal" id="close-modal-settings"></i>
+                <h2>Configuración</h2>
+                <div></div>
+            </header>
+            <div style="padding:20px;">
+                <p>Opciones de sistema simuladas.</p>
+                <div class="input-group" style="margin-top:15px;">
+                    <label>Idioma</label>
+                    <select style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-top:5px;">
+                        <option>Español</option>
+                        <option>Inglés</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-edit-profile" class="modal hidden">
+        <div class="modal-content">
+            <header class="top-bar">
+                <i class="ph ph-x text-main close-modal" id="close-modal-edit"></i>
+                <h2>Editar Perfil</h2>
+                <div></div>
+            </header>
+            <div style="padding:20px;">
+                <div class="input-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="edit-name-input" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-top:5px;">
+                </div>
+                <button class="btn btn-primary fluid" style="margin-top:20px;" id="btn-save-profile">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals to hold Informational Content -->
+    <div id="modal-info" class="modal hidden">
+        <div class="modal-content" style="max-height: 80vh; display:flex; flex-direction:column;">
+            <header class="top-bar">
+                <i class="ph ph-x text-main close-modal" id="close-modal-info"></i>
+                <h2 id="modal-info-title">Información</h2>
+                <div></div>
+            </header>
+            <div style="padding:20px; overflow-y:auto;" id="modal-info-body">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
